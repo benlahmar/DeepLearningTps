@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+<!-- Load the MobileNet model. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+    
+</head>
+<body>
+    <!-- Load TensorFlow.js. This is required to use MobileNet. -->
+
+
+<!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
+<img id="img" src="dog2.png" onclick="detect(this)" width="200px" crossorigin="anonymous"></img>
+<hr/>
+<img id="vv" src="vv2.png" onclick="detect(this)" width="200px" crossorigin="anonymous"></img>
+<div id="cls"></div>
+<progress id="pp" min="0" max="100"></progress>
+<!-- Place your code in the script tag below. You can also use an external .js file -->
+<script>
+  
+  function detect(x){
+  const img = document.getElementById(x.id);
+ console.log(x.id);
+  // Load the model.
+  mobilenet.load().then(model => {
+    pro=document.getElementById("pp");
+   pro.value=100;
+    // Classify the image.
+    model.classify(img).then(predictions => {
+      console.log('Predictions: ');
+      console.log(predictions);
+      predictions.forEach(element => {
+        document.getElementById("cls").innerHTML+="<p>Class:   "+element.className+"; probability:  "+element.probability+"</p>";
+      });
+      
+    });
+  });
+}
+</script>
+</body>
+</html>
